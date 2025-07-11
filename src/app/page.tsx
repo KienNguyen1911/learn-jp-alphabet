@@ -1,103 +1,169 @@
-import Image from "next/image";
+"use client";
+
+import { GlowingEffect } from "@/components/glowing-effect";
+import { FlipCard } from "@/components/flip-card";
+
+
+import React, { useState } from "react";
+
+// Gojūon table order (rows)
+const hiraganaRows = [
+  [
+    { hira: "あ", romaji: "a" },
+    { hira: "い", romaji: "i" },
+    { hira: "う", romaji: "u" },
+    { hira: "え", romaji: "e" },
+    { hira: "お", romaji: "o" },
+  ],
+  [
+    { hira: "か", romaji: "ka" },
+    { hira: "き", romaji: "ki" },
+    { hira: "く", romaji: "ku" },
+    { hira: "け", romaji: "ke" },
+    { hira: "こ", romaji: "ko" },
+  ],
+  [
+    { hira: "さ", romaji: "sa" },
+    { hira: "し", romaji: "shi" },
+    { hira: "す", romaji: "su" },
+    { hira: "せ", romaji: "se" },
+    { hira: "そ", romaji: "so" },
+  ],
+  [
+    { hira: "た", romaji: "ta" },
+    { hira: "ち", romaji: "chi" },
+    { hira: "つ", romaji: "tsu" },
+    { hira: "て", romaji: "te" },
+    { hira: "と", romaji: "to" },
+  ],
+  [
+    { hira: "な", romaji: "na" },
+    { hira: "に", romaji: "ni" },
+    { hira: "ぬ", romaji: "nu" },
+    { hira: "ね", romaji: "ne" },
+    { hira: "の", romaji: "no" },
+  ],
+  [
+    { hira: "は", romaji: "ha" },
+    { hira: "ひ", romaji: "hi" },
+    { hira: "ふ", romaji: "fu" },
+    { hira: "へ", romaji: "he" },
+    { hira: "ほ", romaji: "ho" },
+  ],
+  [
+    { hira: "ま", romaji: "ma" },
+    { hira: "み", romaji: "mi" },
+    { hira: "む", romaji: "mu" },
+    { hira: "め", romaji: "me" },
+    { hira: "も", romaji: "mo" },
+  ],
+  [
+    { hira: "や", romaji: "ya" },
+    null,
+    { hira: "ゆ", romaji: "yu" },
+    null,
+    { hira: "よ", romaji: "yo" },
+  ],
+  [
+    { hira: "ら", romaji: "ra" },
+    { hira: "り", romaji: "ri" },
+    { hira: "る", romaji: "ru" },
+    { hira: "れ", romaji: "re" },
+    { hira: "ろ", romaji: "ro" },
+  ],
+  [
+    { hira: "わ", romaji: "wa" },
+    null,
+    { hira: "を", romaji: "wo" },
+    null,
+    { hira: "ん", romaji: "n" },
+  ]
+];
 
 export default function Home() {
-  return (
-    <div className="grid grid-rows-[20px_1fr_20px] items-center justify-items-center min-h-screen p-8 pb-20 gap-16 sm:p-20 font-[family-name:var(--font-geist-sans)]">
-      <main className="flex flex-col gap-[32px] row-start-2 items-center sm:items-start">
-        <Image
-          className="dark:invert"
-          src="/next.svg"
-          alt="Next.js logo"
-          width={180}
-          height={38}
-          priority
-        />
-        <ol className="list-inside list-decimal text-sm/6 text-center sm:text-left font-[family-name:var(--font-geist-mono)]">
-          <li className="mb-2 tracking-[-.01em]">
-            Get started by editing{" "}
-            <code className="bg-black/[.05] dark:bg-white/[.06] px-1 py-0.5 rounded font-[family-name:var(--font-geist-mono)] font-semibold">
-              src/app/page.tsx
-            </code>
-            .
-          </li>
-          <li className="tracking-[-.01em]">
-            Save and see your changes instantly.
-          </li>
-        </ol>
+  const [allFlipped, setAllFlipped] = useState(false);
+  const [darkMode, setDarkMode] = useState(false);
+  // 2D array for per-card flip state
+  const [flippedStates, setFlippedStates] = useState(
+    hiraganaRows.map(row => row.map(() => false))
+  );
 
-        <div className="flex gap-4 items-center flex-col sm:flex-row">
-          <a
-            className="rounded-full border border-solid border-transparent transition-colors flex items-center justify-center bg-foreground text-background gap-2 hover:bg-[#383838] dark:hover:bg-[#ccc] font-medium text-sm sm:text-base h-10 sm:h-12 px-4 sm:px-5 sm:w-auto"
-            href="https://vercel.com/new?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            <Image
-              className="dark:invert"
-              src="/vercel.svg"
-              alt="Vercel logomark"
-              width={20}
-              height={20}
-            />
-            Deploy now
-          </a>
-          <a
-            className="rounded-full border border-solid border-black/[.08] dark:border-white/[.145] transition-colors flex items-center justify-center hover:bg-[#f2f2f2] dark:hover:bg-[#1a1a1a] hover:border-transparent font-medium text-sm sm:text-base h-10 sm:h-12 px-4 sm:px-5 w-full sm:w-auto md:w-[158px]"
-            href="https://nextjs.org/docs?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Read our docs
-          </a>
-        </div>
-      </main>
-      <footer className="row-start-3 flex gap-[24px] flex-wrap items-center justify-center">
-        <a
-          className="flex items-center gap-2 hover:underline hover:underline-offset-4"
-          href="https://nextjs.org/learn?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
+  // Apply dark mode to html tag
+  React.useEffect(() => {
+    if (darkMode) {
+      document.documentElement.classList.add("dark");
+    } else {
+      document.documentElement.classList.remove("dark");
+    }
+  }, [darkMode]);
+
+  // Reset all per-card flips when toggling flip-all
+  React.useEffect(() => {
+    if (allFlipped) {
+      setFlippedStates(hiraganaRows.map(row => row.map(() => true)));
+    } else {
+      setFlippedStates(hiraganaRows.map(row => row.map(() => false)));
+    }
+  }, [allFlipped]);
+
+  // Handler for single card flip
+  const handleSingleFlip = (rowIdx: number, colIdx: number) => {
+    setFlippedStates(prev =>
+      prev.map((row, r) =>
+        row.map((flipped, c) =>
+          r === rowIdx && c === colIdx ? !flipped : flipped
+        )
+      )
+    );
+  };
+
+  return (
+    <main className="min-h-screen flex flex-col items-center justify-center p-4">
+      <h1 className="text-3xl font-bold mb-8">Hiragana Flip Cards</h1>
+      <div className="flex gap-4 mb-6">
+        <button
+          className="px-4 py-2 bg-blue-600 text-white rounded hover:bg-blue-700 transition"
+          onClick={() => setAllFlipped((f) => !f)}
         >
-          <Image
-            aria-hidden
-            src="/file.svg"
-            alt="File icon"
-            width={16}
-            height={16}
-          />
-          Learn
-        </a>
-        <a
-          className="flex items-center gap-2 hover:underline hover:underline-offset-4"
-          href="https://vercel.com/templates?framework=next.js&utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
+          {allFlipped ? "Show Hiragana" : "Show Romaji"}
+        </button>
+        <button
+          className="px-4 py-2 bg-gray-200 dark:bg-gray-800 text-black dark:text-white rounded hover:bg-gray-300 dark:hover:bg-gray-700 transition"
+          onClick={() => setDarkMode((d) => !d)}
         >
-          <Image
-            aria-hidden
-            src="/window.svg"
-            alt="Window icon"
-            width={16}
-            height={16}
-          />
-          Examples
-        </a>
-        <a
-          className="flex items-center gap-2 hover:underline hover:underline-offset-4"
-          href="https://nextjs.org?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <Image
-            aria-hidden
-            src="/globe.svg"
-            alt="Globe icon"
-            width={16}
-            height={16}
-          />
-          Go to nextjs.org →
-        </a>
-      </footer>
-    </div>
+          {darkMode ? "Light Mode" : "Dark Mode"}
+        </button>
+      </div>
+      <div className="flex flex-col gap-2">
+        {hiraganaRows.map((row, rowIdx) => (
+          <div key={rowIdx} className="flex flex-row gap-2 justify-center">
+            {row.map((cell, colIdx) =>
+              cell ? (
+                <div key={cell.hira} className="w-16 h-24 relative">
+                  <GlowingEffect
+                    spread={32}
+                    glow={true}
+                    disabled={false}
+                    proximity={48}
+                    inactiveZone={0.01}
+                  />
+                  <div className="absolute inset-0 flex items-center justify-center">
+                    <FlipCard
+                      front={<span className="text-3xl flex items-center justify-center h-full">{cell.hira}</span>}
+                      back={<span className="text-xl flex items-center justify-center h-full">{cell.romaji}</span>}
+                      flipped={flippedStates[rowIdx][colIdx]}
+                      className=""
+                      onClick={() => handleSingleFlip(rowIdx, colIdx)}
+                    />
+                  </div>
+                </div>
+              ) : (
+                <div key={colIdx} className="w-16 h-24" />
+              )
+            )}
+          </div>
+        ))}
+      </div>
+    </main>
   );
 }
