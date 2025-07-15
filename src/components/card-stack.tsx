@@ -1,8 +1,6 @@
 "use client";
 import { useEffect, useState } from "react";
 import { motion } from "motion/react";
-import { FlipCard } from "./flip-card";
-import { Card } from "aceternity-ui";
 
 let interval: any;
 
@@ -57,28 +55,17 @@ export const CardStack = ({
               zIndex: cards.length - index, //  decrease z-index for the cards that are behind
             }}
           >
-            <FlipCard
-              front={
-                <Card className="h-full w-full flex flex-col justify-between p-4">
-                  <div className="font-normal text-neutral-700 dark:text-neutral-200">
-                    {card.content}
-                  </div>
-                  <div>
-                    <p className="text-neutral-500 font-medium dark:text-white">
-                      {card.name}
-                    </p>
-                    <p className="text-neutral-400 font-normal dark:text-neutral-200">
-                      {card.designation}
-                    </p>
-                  </div>
-                </Card>
-              }
-              back={
-                <Card className="h-full w-full flex items-center justify-center p-4">
-                  <span className="text-lg font-semibold">Back Side</span>
-                </Card>
-              }
-            />
+            <div className="font-normal text-neutral-700 dark:text-neutral-200">
+              {card.content}
+            </div>
+            <div>
+              <p className="text-neutral-500 font-medium dark:text-white">
+                {card.name}
+              </p>
+              <p className="text-neutral-400 font-normal dark:text-neutral-200">
+                {card.designation}
+              </p>
+            </div>
           </motion.div>
         );
       })}
